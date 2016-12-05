@@ -25,6 +25,15 @@ def print(students)
   end
 end
 
+def print_letter(students, letter)
+  students.each_with_index do |student, index|
+    if (student[:name].chars)[0] == letter
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
+
 
 def print_footer(names)
     puts "Overall, we have #{names.count} great students"
@@ -52,5 +61,5 @@ end
 #nothing happens until we call the methods
 students = input_students
 print_header
-print(students)
+print_letter(students, "D")
 print_footer(students)
