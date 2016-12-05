@@ -14,48 +14,50 @@
 #]
 
 
-def print_header
-  puts "The students of Villians Academy"
-  puts "-------------"
+center_by = 60
+
+def print_header(center_by)
+  puts "The students of Villians Academy".center(center_by)
+  puts "-------------".center(center_by)
 end
 
-def print(students)
+def print(students, center_by)
   students.each_with_index do |student, index|
-    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
   end
 end
 
-def loop_print(students)
+def loop_print(students, center_by)
   #commenting
   i = 0
   while i<students.length
     student = students[i]
-    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
     i+=1
   end
 end
 
 
-def print_letter(students, letter)
+def print_letter(students, letter, center_by)
   students.each_with_index do |student, index|
     if (student[:name].chars)[0] == letter
-      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
     end
   end
 end
 
-def print_upto_12chars(students)
+def print_upto_12chars(students, center_by)
   students.each_with_index do |student, index|
     if (student[:name].chars).length < 12
-      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
     end
   end
 end
 
 
 
-def print_footer(names)
-    puts "Overall, we have #{names.count} great students"
+def print_footer(names, center_by)
+    puts "Overall, we have #{names.count} great students".center(center_by)
 end
 
 def input_students
@@ -68,7 +70,7 @@ def input_students
   #while the name is  not empty, repeat this code
   while !name.empty? do
     #add the student hash to the  array
-    students <<  {name: name, cohort: :november}
+    students <<  {name: name, cohort: :november, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
     puts "Now we have #{students.count} students"
     #get another name from the user
     name = gets.chomp
@@ -79,11 +81,11 @@ end
 
 #nothing happens until we call the methods
 students = input_students
-print_header
+print_header(center_by)
 
-#print(students)
-#print_letter(students, "D")
-#print_upto_12chars(students)
-loop_print(students)
+#print(students, center_by)
+#print_letter(students, "D", center_by)
+#print_upto_12chars(students, center_by)
+loop_print(students, center_by)
 
-print_footer(students)
+print_footer(students, center_by)
