@@ -36,6 +36,15 @@ def input_students
     puts "And the cohort?"
     cohort = gets.strip!.to_sym
     cohort = "November" if cohort.empty?
+    cohort=cohort.to_s
+    month = cohort.include?("January")||cohort.include?("February")||cohort.include?("March")||cohort.include?("April")||cohort.include?("May")||cohort.include?("June")||cohort.include?("July")||cohort.include?("August")||cohort.include?("September")||cohort.include?("October")||cohort.include?("November")||cohort.include?("December")
+    while !month
+      puts "That isn't a month....the cohort?"
+      cohort = gets.strip!.to_sym
+      cohort = "November" if cohort.empty?
+      cohort=cohort.to_s
+      month = cohort.include?("January")||cohort.include?("February")||cohort.include?("March")||cohort.include?("April")||cohort.include?("May")||cohort.include?("June")||cohort.include?("July")||cohort.include?("August")||cohort.include?("September")||cohort.include?("October")||cohort.include?("November")||cohort.include?("December")
+    end
     #add the student hash to the  array
     students <<  {name: name, cohort: cohort, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
     puts "Now we have #{students.count} students"
