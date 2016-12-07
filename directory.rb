@@ -8,40 +8,11 @@ end
 
 # method printing the student name and cohort using .each_with_index
 def print(students, center_by)
+  students.sort!{|x,y| x[:cohort]<=>y[:cohort]}
   students.each_with_index do |student, index|
     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
   end
 end
-
-# method printing the student name and cohort using a while loop
-def loop_print(students, center_by)
-  #commenting
-  i = 0
-  while i<students.length
-    student = students[i]
-    puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
-    i+=1
-  end
-end
-
-# method printing only students with names beginning with a certain letter
-def print_letter(students, letter, center_by)
-  students.each_with_index do |student, index|
-    if (student[:name].chars)[0] == letter
-      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
-    end
-  end
-end
-
-# method printing only students with names less than 12 chars long
-def print_upto_12chars(students, center_by)
-  students.each_with_index do |student, index|
-    if (student[:name].chars).length < 12
-      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
-    end
-  end
-end
-
 
 # method to print the footer
 def print_footer(names, center_by)
@@ -76,10 +47,5 @@ end
 #nothing happens until we call the methods
 students = input_students
 print_header(center_by)
-
 print(students, center_by)
-#print_letter(students, "D", center_by)
-#print_upto_12chars(students, center_by)
-#loop_print(students, center_by)
-
 print_footer(students, center_by)
