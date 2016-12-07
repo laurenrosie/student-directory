@@ -27,19 +27,19 @@ def input_students
   # create and empty array
   students = []
   #get the first name
-  name = gets.chomp
+  name = gets.strip!
   #while the name is  not empty, repeat this code
   while !name.empty?  do
     #get that students cohort
     puts "And the cohort?"
-    cohort = gets.chomp.to_sym
+    cohort = gets.strip!.to_sym
     cohort = "November" if cohort.empty?
     #add the student hash to the  array
     students <<  {name: name, cohort: cohort, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
     puts "Now we have #{students.count} students"
     #get another name from the user
     puts "Another name?"
-    name = gets.chomp
+    name = gets.strip!
   end
   #return the array of students
   students
