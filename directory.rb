@@ -16,7 +16,8 @@ end
 
 # method to print the footer
 def print_footer(names, center_by)
-    puts "Overall, we have #{names.count} great students".center(center_by)
+    names.count==1 ? final_word = "student":final_word = "students"
+    puts "Overall, we have #{names.count} great #{final_word}".center(center_by)
 end
 
 # method to get input from user to define the students hash
