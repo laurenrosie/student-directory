@@ -8,10 +8,12 @@ end
 
 # method printing the student name and cohort using .each_with_index
 def print(students, center_by)
-  students.sort!{|x,y| x[:cohort]<=>y[:cohort]}
-  students.each_with_index do |student, index|
-    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
-  end
+
+    students.sort!{|x,y| x[:cohort]<=>y[:cohort]}
+    students.each_with_index do |student, index|
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
+    end
+
 end
 
 # method to print the footer
@@ -47,6 +49,10 @@ end
 
 #nothing happens until we call the methods
 students = input_students
-print_header(center_by)
-print(students, center_by)
-print_footer(students, center_by)
+if students.count == 0
+  puts "No students to print".center(center_by)
+else
+  print_header(center_by)
+  print(students, center_by)
+  print_footer(students, center_by)
+end
