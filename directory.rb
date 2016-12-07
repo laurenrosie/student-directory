@@ -1,25 +1,25 @@
-center_by = 60
+$center_by = 60
 
 # method printing just the header
-def print_header(center_by)
-  puts "The students of Villians Academy".center(center_by)
-  puts "-------------".center(center_by)
+def print_header
+  puts "The students of Villians Academy".center($center_by)
+  puts "-------------".center($center_by)
 end
 
 # method printing the student name and cohort using .each_with_index
-def print(students, center_by)
+def print(students)
 
     students.sort!{|x,y| x[:cohort]<=>y[:cohort]}
     students.each_with_index do |student, index|
-      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(center_by)
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center($center_by)
     end
 
 end
 
 # method to print the footer
-def print_footer(names, center_by)
+def print_footer(names)
     names.count==1 ? final_word = "student":final_word = "students"
-    puts "Overall, we have #{names.count} great #{final_word}".center(center_by)
+    puts "Overall, we have #{names.count} great #{final_word}".center($center_by)
 end
 
 # method to get input from user to define the students hash
@@ -47,12 +47,33 @@ def input_students
   students
 end
 
-#nothing happens until we call the methods
-students = input_students
-if students.count == 0
-  puts "No students to print".center(center_by)
-else
-  print_header(center_by)
-  print(students, center_by)
-  print_footer(students, center_by)
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+
+    selection = gets.chomp
+
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      if students.length == 0
+        puts "No students to print".center(center_by)
+      else
+      print_header
+      print(students)
+      print_footer(students)
+      end
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean, try again"
+    end
+
+  end
 end
+
+interactive_menu
