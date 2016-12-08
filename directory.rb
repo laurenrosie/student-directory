@@ -8,7 +8,7 @@ def print_header
 end
 
 # method printing the student name and cohort using .each_with_index
-def print
+def print_students_list
 
     @students.sort!{|x,y| x[:cohort]<=>y[:cohort]}
     @students.each_with_index do |student, index|
@@ -63,7 +63,7 @@ end
 
 def show_students
   print_header
-  print
+  print_students_list
   print_footer
 end
 
