@@ -43,14 +43,19 @@ def get_cohort
   return cohort
 end
 
+def assign_students(name, cohort)
+  @students <<  {name: name, cohort: cohort.to_sym, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
+
+end
 # method to get input from user to define the students hash
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice for name input"
   name = STDIN.gets.chomp
   while !name.empty?  do
     cohort = get_cohort
-    @students <<  {name: name, cohort: cohort, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
+    assign_students(name, cohort)
     puts "Now we have #{@students.count} students"
     puts "Another name?"
     name = STDIN.gets.chomp
@@ -117,7 +122,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    assign_students(name, cohort)
   end
   file.close
 end
