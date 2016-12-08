@@ -32,7 +32,7 @@ end
 # method to get cohort or put to default
 def get_cohort
   cohort = STDIN.gets.chomp
-  cohort = default if cohort.empty?
+  cohort = "November" if cohort.empty?
   return cohort
 end
 
@@ -75,8 +75,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list to a file"
   puts "9. Exit"
 end
 
@@ -88,7 +88,7 @@ def show_students
 end
 
 def get_filename
-  puts "enter a file you wish to use:"
+  puts "Enter a file you wish to use:"
   filename = STDIN.gets.chomp
   while !(File.exists?(filename))
     puts "Sorry filename not recognised, try again:"
@@ -129,7 +129,7 @@ end
 def save_students
   #open the file for writing
   filename = get_filename
-  file = File.open(filename, "w")
+  File.open(filename, "w") do |file|
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -137,18 +137,18 @@ def save_students
     file.puts csv_line
   end
   puts "Saved to #{filename}."
-  file.close
+end
 end
 
 # method to load the students from the students.csv file
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    assign_students(name, cohort)
+  File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+        name, cohort = line.chomp.split(',')
+        assign_students(name, cohort)
+      end
+    puts "Load successful"
   end
-  puts "Load successful"
-  file.close
 end
 
 # method to try load students from the file provided on the command line or the default
