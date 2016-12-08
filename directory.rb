@@ -9,39 +9,48 @@ end
 
 # method printing the student name and cohort using .each_with_index
 def print_students_list
-
-  #if @students.count > 1
-  #  @students.sort!{|x, y| x[:cohort]<=> y[:cohortß]}
-  #end
-
   @students.each_with_index do |student, index|
       puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(@center_by)
   end
-
 end
 
 # method to print the footer
 def print_footer
-    @students.count==1 ? final_word = "student":final_word = "students"
+    @students.count==1 ? final_word = "student" : final_word = "students"
     puts "Overall, we have #{@students.count} great #{final_word}".center(@center_by)
 end
 
-# method to get the cohort value from the user
+# method to check if string input is one of the entries of the array values
+def check_input(input, values)
+  input_ok = false
+  values.each do |value|
+      input_ok = true if input.include?(value)
+  end
+  return input_ok
+end
+
+# method to get cohort or put to default
 def get_cohort
-  puts "And the cohort?"
   cohort = STDIN.gets.chomp
   cohort = default if cohort.empty?
-  value = cohort
-  month = value.include?("January")||value.include?("February")||value.include?("March")||value.include?("April")||value.include?("May")||value.include?("June")||value.include?("July")||value.include?("August")||value.include?("September")||value.include?("October")||value.include?("November")||value.include?("December")
-  while !month
+  return cohort
+end
+
+# method to get the cohort value from the user and check it, if not okay loop
+def get_and_check_cohort
+  cohorts = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  puts "And the cohort?"
+  cohort = get_cohort
+  input_ok = check_input(cohort, cohorts)
+  while !input_ok
     puts "That isn't a month....the cohort?"
-    cohort = STDIN.gets.chomp
-    cohort = "November" if cohort.empty?
-    value = cohort
-    month = value.include?("January")||value.include?("February")||value.include?("March")||value.include?("April")||value.include?("May")||value.include?("June")||value.include?("July")||value.include?("August")||value.include?("September")||value.include?("October")||value.include?("November")||value.include?("December")
+    cohort = get_cohort
+    input_ok = check_input(cohort, cohorts)
   end
   return cohort
 end
+
+
 
 def assign_students(name, cohort)
   @students <<  {name: name, cohort: cohort.to_sym, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
@@ -54,7 +63,7 @@ def input_students
   puts "To finish, just hit return twice for name input"
   name = STDIN.gets.chomp
   while !name.empty?  do
-    cohort = get_cohort
+    cohort = get_and_check_cohort
     assign_students(name, cohort)
     puts "Now we have #{@students.count} students"
     puts "Another name?"
