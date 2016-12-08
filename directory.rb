@@ -87,6 +87,16 @@ def show_students
   print_footer
 end
 
+def get_filename
+  puts "enter a file you wish to use:"
+  filename = STDIN.gets.chomp
+  while !(File.exists?(filename))
+    puts "Sorry filename not recognised, try again:"
+    filename = STDIN.gets.chomp
+  end
+  return filename
+end
+
 # method to process the selection made by the user in interactive menu
 def process(selection)
   case selection
@@ -98,7 +108,8 @@ def process(selection)
     when "3"
       save_students
     when "4"
-      load_students
+      filename = get_filename
+      load_students(filename)
     when "9"
       exit
     else
@@ -117,14 +128,15 @@ end
 # method to save the students array into a file students.csv
 def save_students
   #open the file for writing
-  file = File.open("students.csv", "w")
+  filename = get_filename
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  puts "Saved to students.csv."
+  puts "Saved to #{filename}."
   file.close
 end
 
