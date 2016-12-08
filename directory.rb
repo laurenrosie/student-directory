@@ -10,7 +10,6 @@ end
 # method printing the student name and cohort using .each_with_index
 def print_students_list
 
-    @students.sort!{|x,y| x[:cohort]<=>y[:cohort]}
     @students.each_with_index do |student, index|
       puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(@center_by)
     end
@@ -26,13 +25,13 @@ end
 # method to get the cohort value from the user
 def get_cohort
   puts "And the cohort?"
-  cohort = gets.chomp
+  cohort = STDIN.gets.chomp
   cohort = default if cohort.empty?
   value = cohort
   month = value.include?("January")||value.include?("February")||value.include?("March")||value.include?("April")||value.include?("May")||value.include?("June")||value.include?("July")||value.include?("August")||value.include?("September")||value.include?("October")||value.include?("November")||value.include?("December")
   while !month
     puts "That isn't a month....the cohort?"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     cohort = "November" if cohort.empty?
     value = cohort
     month = value.include?("January")||value.include?("February")||value.include?("March")||value.include?("April")||value.include?("May")||value.include?("June")||value.include?("July")||value.include?("August")||value.include?("September")||value.include?("October")||value.include?("November")||value.include?("December")
@@ -44,13 +43,13 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice for name input"
-  name = gets.chomp
+  name = STDIN.gets.chomp
   while !name.empty?  do
     cohort = get_cohort
     @students <<  {name: name, cohort: cohort, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
     puts "Now we have #{@students.count} students"
     puts "Another name?"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -92,7 +91,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -110,8 +109,8 @@ def save_students
 end
 
 # method to load the students from the students.csv file
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -119,4 +118,17 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu
