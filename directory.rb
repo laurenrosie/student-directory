@@ -96,6 +96,7 @@ def interactive_menu
   end
 end
 
+# method to save the students array into a file students.csv
 def save_students
   #open the file for writing
   file = File.open("students.csv", "w")
@@ -108,6 +109,7 @@ def save_students
   file.close
 end
 
+# method to load the students from the students.csv file
 def load_students
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
