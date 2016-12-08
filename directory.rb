@@ -50,14 +50,13 @@ def get_and_check_cohort
   return cohort
 end
 
-
-
+# method adding hash with name and cohort to the students array
 def assign_students(name, cohort)
   @students <<  {name: name, cohort: cohort.to_sym, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
 
 end
-# method to get input from user to define the students hash
 
+# method to get input from user to define the students hash
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice for name input"
@@ -69,6 +68,7 @@ def input_students
     puts "Another name?"
     name = STDIN.gets.chomp
   end
+  puts "Input successful"
 end
 
 # method to print the interactive menu
@@ -94,6 +94,7 @@ def process(selection)
       input_students
     when "2"
       show_students
+      puts "Show successful"
     when "3"
       save_students
     when "4"
@@ -123,6 +124,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "Saved to students.csv."
   file.close
 end
 
@@ -133,9 +135,11 @@ def load_students(filename = "students.csv")
     name, cohort = line.chomp.split(',')
     assign_students(name, cohort)
   end
+  puts "Load successful"
   file.close
 end
 
+# method to try load students from the file provided on the command line or the default
 def try_load_students
 
   ARGV.first.nil? ? filename = "students.csv" : filename = ARGV.first
