@@ -27,8 +27,6 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice for name input"
-  # create and empty array
-  #@students = []
   #get the first name
   name = gets.strip!
   #while the name is  not empty, repeat this code
@@ -69,27 +67,23 @@ def show_students
   print_footer
 end
 
-def interactive_menu
-  #students = []
-  loop do
-    print_menu
-
-    selection = gets.chomp
-
-    case selection
+def process(selection)
+  case selection
     when "1"
       input_students
     when "2"
-      if @students.length == 0
-        puts "No students to print".center(center_by)
-      else
       show_students
-      end
     when "9"
       exit
     else
       puts "I don't know what you mean, try again"
-    end
+  end
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
   end
 end
 
