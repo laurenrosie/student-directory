@@ -9,13 +9,14 @@ end
 
 # method printing the student name and cohort using .each_with_index
 def print_students_list
-#### MISSING SORTING BY COHORT
-if @students.count > 1
-  @students.sort!{|x, y| x[:cohort]<=> y[:cohortß]}
-end
-    @students.each_with_index do |student, index|
+
+  #if @students.count > 1
+  #  @students.sort!{|x, y| x[:cohort]<=> y[:cohortß]}
+  #end
+
+  @students.each_with_index do |student, index|
       puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)".center(@center_by)
-    end
+  end
 
 end
 
