@@ -23,50 +23,52 @@ def print_footer
     puts "Overall, we have #{@students.count} great #{final_word}".center(@center_by)
 end
 
+# method to get the cohort value from the user
+def get_cohort
+  puts "And the cohort?"
+  cohort = gets.chomp
+  cohort = default if cohort.empty?
+  value = cohort
+  month = value.include?("January")||value.include?("February")||value.include?("March")||value.include?("April")||value.include?("May")||value.include?("June")||value.include?("July")||value.include?("August")||value.include?("September")||value.include?("October")||value.include?("November")||value.include?("December")
+  while !month
+    puts "That isn't a month....the cohort?"
+    cohort = gets.chomp
+    cohort = "November" if cohort.empty?
+    value = cohort
+    month = value.include?("January")||value.include?("February")||value.include?("March")||value.include?("April")||value.include?("May")||value.include?("June")||value.include?("July")||value.include?("August")||value.include?("September")||value.include?("October")||value.include?("November")||value.include?("December")
+  end
+  return cohort
+end
+
 # method to get input from user to define the students hash
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice for name input"
-  #get the first name
-  name = gets.strip!
-  #while the name is  not empty, repeat this code
+  name = gets.chomp
   while !name.empty?  do
-    #get that students cohort
-    puts "And the cohort?"
-    cohort = gets.strip!.to_sym
-    cohort = "November" if cohort.empty?
-    cohort=cohort.to_s
-    month = cohort.include?("January")||cohort.include?("February")||cohort.include?("March")||cohort.include?("April")||cohort.include?("May")||cohort.include?("June")||cohort.include?("July")||cohort.include?("August")||cohort.include?("September")||cohort.include?("October")||cohort.include?("November")||cohort.include?("December")
-    while !month
-      puts "That isn't a month....the cohort?"
-      cohort = gets.strip!.to_sym
-      cohort = "November" if cohort.empty?
-      cohort=cohort.to_s
-      month = cohort.include?("January")||cohort.include?("February")||cohort.include?("March")||cohort.include?("April")||cohort.include?("May")||cohort.include?("June")||cohort.include?("July")||cohort.include?("August")||cohort.include?("September")||cohort.include?("October")||cohort.include?("November")||cohort.include?("December")
-    end
-    #add the student hash to the  array
+    cohort = get_cohort
     @students <<  {name: name, cohort: cohort, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
     puts "Now we have #{@students.count} students"
-    #get another name from the user
     puts "Another name?"
-    name = gets.strip!
+    name = gets.chomp
   end
-  #return the array of students
-  #students
 end
 
+# method to print the interactive menu
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "9. Exit"
 end
 
+# method to show the list of students
 def show_students
   print_header
   print_students_list
   print_footer
 end
 
+# method to process the selection made by the user in interactive menu
 def process(selection)
   case selection
     when "1"
@@ -80,6 +82,7 @@ def process(selection)
   end
 end
 
+# method to run the interactive menu
 def interactive_menu
   loop do
     print_menu
