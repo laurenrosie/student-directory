@@ -131,26 +131,18 @@ end
 def save_students
   #open the file for writing
   filename = get_filename
-  File.open(filename, "w") do |file|
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  #save each entry of the array @students into the file
+  CSV.open(filename, "wb") do |csv|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv << student_data
+    end
   end
-  puts "Saved to #{filename}."
-end
+
 end
 
 # method to load the students from the students.csv file
 def load_students(filename = 'students.csv')
-  #File.open(filename, "r") do |file|
-  #    file.readlines.each do |line|
-  #      name, cohort = line.chomp.split(',')
-  #      assign_students(name, cohort)
-  #    end
-  #  puts "Load successful"
-  #end
   CSV.foreach(filename) do |line|
     name = line[0]
     cohort = line[1]
