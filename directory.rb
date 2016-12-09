@@ -1,6 +1,8 @@
 @center_by = 60
 @students = []
 
+require 'csv'
+
 # method printing just the header
 def print_header
   puts "The students of Villians Academy".center(@center_by)
@@ -53,7 +55,6 @@ end
 # method adding hash with name and cohort to the students array
 def assign_students(name, cohort)
   @students <<  {name: name, cohort: cohort.to_sym, country_of_birth: :unknown, height: :unknown, hobbies: :unknown}
-
 end
 
 # method to get input from user to define the students hash
@@ -87,6 +88,7 @@ def show_students
   print_footer
 end
 
+# either gets filename or if file doesn't exist asks user again
 def get_filename
   puts "Enter a file you wish to use:"
   filename = STDIN.gets.chomp
@@ -141,13 +143,18 @@ end
 end
 
 # method to load the students from the students.csv file
-def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-      file.readlines.each do |line|
-        name, cohort = line.chomp.split(',')
-        assign_students(name, cohort)
-      end
-    puts "Load successful"
+def load_students(filename = 'students.csv')
+  #File.open(filename, "r") do |file|
+  #    file.readlines.each do |line|
+  #      name, cohort = line.chomp.split(',')
+  #      assign_students(name, cohort)
+  #    end
+  #  puts "Load successful"
+  #end
+  CSV.foreach(filename) do |line|
+    name = line[0]
+    cohort = line[1]
+    assign_students(name, cohort)
   end
 end
 
